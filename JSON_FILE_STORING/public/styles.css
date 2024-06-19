@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 5px 10px;
+}
