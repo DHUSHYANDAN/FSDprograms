@@ -1,23 +1,41 @@
+ 
+ <div class="header">
+ <h2  >Existing Students</h2> 
+ <h3><a href="/" class="add-user">ADD Users</a></h3>
 
-    <h1>Student Details</h1>
-    <form action="/" method="POST">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br>
-        <label for="registration_number">Registration Number:</label><br>
-        <input type="text" id="registration_number" name="registration_number" required><br>
-        <label for="dept">Department:</label><br>
-        <input type="text" id="dept" name="dept" required><br>
-        <label for="dob">Date of Birth:</label><br>
-        <input type="date" id="dob" name="dob" required><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description"></textarea><br>
-        <input type="submit" value="Submit"><br><br>
-        <a href="" class="update">Update</a>
-        <a href="" class="delete">Delete</a>
-       <h1> {{#each rows}}
-       <p>    {{this.name}}</p>
-        {{/each}}
-</h1>
-    </form>
+ </div>
+    <table>
+        <thead>
+            <tr>
+                    <th>S.No</th>
+                <th>Name</th>
+                <th>Registration Number</th>
+                <th>Department</th>
+                <th>Date of Birth</th>
+                <th>Email</th>
+                <th>Description</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each rows}}
+            <tr>
+               <td>{{1}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.registration_number}}</td>
+                <td>{{this.dept}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.description}}</td>
+                <td>
+                    <a href="/updateusers/{{this.name}}" class="update">Update</a>
+                </td>
+                <td>
+                    <a href="/deleteusers/{{this.name}}" class="delete">Delete</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    
+    </table>
