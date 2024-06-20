@@ -16,5 +16,8 @@
         <input type="submit" value="Submit"><br><br>
         <a href="" class="update">Update</a>
         <a href="" class="delete">Delete</a>
-        
+       <h1> {{#each rows}}
+       <p>    {{this.name}}</p>
+        {{/each}}
+</h1>
     </form>

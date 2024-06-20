@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs=require('express-handlebars')
 const mysql = require('mysql2');
+const routes=require("./server/routes/students")
+
 // const path = require('path');
 
 const app = express();
@@ -20,18 +22,7 @@ app.set('view engine', 'hbs');
          // app.set('view engine', 'ejs');
 
 
-// MySQL Connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'kvcet1234',  // replace with your MySQL password
-    database: 'eventDB'
-});
 
-db.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to MySQL database');
-});
 
 // Create Event
 app.post('/', (req, res) => {
@@ -68,9 +59,8 @@ app.get('/Details', (req, res) => {
 
 
 // Serve the HTML file
-app.get('/', (req, res) => {
-    res.render( 'index');
-});
+app.use('/',routes);
+
 
 // Start the server
 app.listen(port, () => {
