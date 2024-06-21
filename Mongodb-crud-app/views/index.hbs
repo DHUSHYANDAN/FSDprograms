@@ -1,0 +1,42 @@
+ 
+ <div class="header">
+ <h2  >Existing Students</h2> 
+ <h3><a href="/" class="add-user">ADD Users</a></h3>
+
+ </div>
+    <table>
+        <thead>
+            <tr>
+                    <th>S.No</th>
+                <th>Name</th>
+                <th>Registration Number</th>
+                <th>Department</th>
+                <th>Date of Birth</th>
+                <th>Email</th>
+                <th>Description</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each events}}
+            <tr>
+               <td>{{this.id}}</td>
+               
+                <td>{{this.name}}</td>
+                <td>{{this.registration_number}}</td>
+                <td>{{this.dept}}</td>
+                <td>{{this.dob}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.description}}</td>
+                <td>
+                    <a href="/Editusers/{{this.registration_number}}" class="update">Update</a>
+                </td>
+                <td>
+                    <a href="/deleteusers/{{this.registration_number}}" class="delete">Delete</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    
+    </table>
