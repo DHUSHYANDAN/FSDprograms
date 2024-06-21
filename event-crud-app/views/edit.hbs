@@ -164,32 +164,30 @@ tr:hover {
 
 
         <h1>Edit Student Details</h1>
-     <form action="/updateusers" method="POST">
-     {{#each rows}}
-     <div class="form_in">
+<form action="/updateusers" method="POST">
  
+    <div class="form_in">
         <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" value="{{this.name}}" required><br>
-        
+        <input type="text" id="name" name="name" value="{{student.name}}" required><br>
+
         <label for="registration_number">Registration Number:</label><br>
-        <input type="number" id="registration_number" value="{{this.registration_number}}" name="registration_number" required><br>
-        
+        <input type="number" id="registration_number" name="registration_number" value="{{student.registration_number}}" required readonly><br>
+
         <label for="dept">Department:</label><br>
-        <input type="text" id="dept" name="dept" value="{{this.dept}}" required><br>
-        
+        <input type="text" id="dept" name="dept" value="{{student.dept}}" required><br>
+
         <label for="dob">Date of Birth:</label><br>
-        <input type="date" id="dob" name="dob" value="{{this.dob}}" required><br>
-        
+        <input type="date" id="dob" name="dob" value="{{student.dob}}" required min="1900-01-01" max="2005-12-31"><br>
+
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" value="{{this.email}}" required><br>
-        
+        <input type="email" id="email" name="email" value="{{student.email}}" required><br>
+
         <label for="description">Description:</label><br>
-        <textarea id="description" name="description" value="{{this.description}}" required></textarea><br>
-        
+        <textarea id="description" name="description" required>{{student.description}}</textarea><br>
+
         <input type="submit" value="Submit"><br><br>
-
+        <h3><a href="/adduser" class="add-user">Back</a></h3>
     </div>
-    {{/each}}
-    </h1>
-    </form>
+</form>
 
+   

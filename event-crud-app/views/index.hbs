@@ -21,7 +21,8 @@
         <tbody>
             {{#each rows}}
             <tr>
-               <td>{{1}}</td>
+               <td>{{this.id}}</td>
+               
                 <td>{{this.name}}</td>
                 <td>{{this.registration_number}}</td>
                 <td>{{this.dept}}</td>
@@ -29,10 +30,10 @@
                 <td>{{this.email}}</td>
                 <td>{{this.description}}</td>
                 <td>
-                    <a href="/updateusers/{{this.name}}" class="update">Update</a>
+                    <a href="/Editusers/{{this.registration_number}}" class="update">Update</a>
                 </td>
                 <td>
-                    <a href="/deleteusers/{{this.name}}" class="delete">Delete</a>
+                    <a href="/deleteusers/{{this.registration_number}}" class="delete">Delete</a>
                 </td>
             </tr>
             {{/each}}

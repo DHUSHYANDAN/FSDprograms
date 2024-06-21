@@ -8,12 +8,12 @@ router.get('/',studentcon.home)
 
 router.post('/addusers',studentcon.detailspost)
 
-router.get('/updateusers/:name',studentcon.detailsupdateget)
+router.get('/Editusers/:registration_number',studentcon.detailsupdateget)
 
-router.put('/updateusers',studentcon.detailsupdate)
+router.post('/updateusers',studentcon.detailsupdate)
 
-router.get('/deleteusers/:name',studentcon.detailsdeleteget)
+router.get('/deleteusers/:registration_number',studentcon.detailsdeleteget)
 
-router.delete('/deleteusers',studentcon.detailsdelete)
+router.post('/Deleteusers',studentcon.detailsdelete)
 
 module.exports=router;
