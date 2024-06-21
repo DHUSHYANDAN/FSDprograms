@@ -84,24 +84,21 @@ module.exports.detailsupdateget = (req, res) => {
 //edit the users update method
 module.exports.detailsupdate = (req, res) => {
     const { name, registration_number, dept, dob, email, description } = req.body;
-   
     const sql = 'UPDATE new_events SET name = ?, registration_number = ?, dept = ?, dob = ?, email = ?, description = ? WHERE registration_number = ?';
-    db.query(sql, [name, registration_number, dept, dob, email, description, name], (err, result) => {
+    db.query(sql, [name, registration_number, dept, dob, email, description, registration_number], (err, result) => {
         if (err) {
-            if (err.code === 'ER_DUP_ENTRY') {
-                
-                res.status(400).send("<script>alert('Error: Duplicate registration number. Please use a different registration number.')</script>");
+            console.log('Error in updating data', err);
+            return res.status(500).send("<script>alert('Error: Unable to update the record. Please try again later.')</script>");
+        } else {
+            if (result.affectedRows === 0) {
+                return res.status(404).send("<script>alert('Error: No record found with the provided id.')</script>");
             } else {
-                
-                throw err;
+                res.redirect('/adduser');
             }
-
-          
         }
-
-        res.redirect('/adduser'); // Redirect after successful update
     });
 };
+
 
 
 
