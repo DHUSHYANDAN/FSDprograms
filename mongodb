@@ -1,0 +1,89 @@
+use employeeDB
+db.createCollection("employees")
+
+db.employees.insertMany([
+    {
+        eid: 1,
+        ename: "Rahul",
+        dept: "IT",
+        desig: "developer",
+        salary: 60000,
+        yoj: 2019,
+        address: {
+            dno: "123",
+            street: "First St",
+            locality: "Downtown",
+            city: "CityA"
+        }
+    },
+    {
+        eid: 2,
+        ename: "Anita",
+        dept: "HR",
+        desig: "manager",
+        salary: 70000,
+        yoj: 2018,
+        address: {
+            dno: "456",
+            street: "Second St",
+            locality: "Uptown",
+            city: "CityB"
+        }
+    },
+    {
+        eid: 3,
+        ename: "Vikram",
+        dept: "IT",
+        desig: "developer",
+        salary: 50000,
+        yoj: 2020,
+        address: {
+            dno: "789",
+            street: "Third St",
+            locality: "Midtown",
+            city: "CityC"
+        }
+    }
+])
+
+
+db.employees.find({
+    salary: { $gt: 50000, $lt: 75000 }
+})
+
+db.employees.find({
+    desig: "developer"
+})
+
+db.employees.updateOne(
+    { ename: "Rahul" },
+    { $set: { project: [] } }
+)
+
+db.employees.updateOne(
+    { ename: "Rahul" },
+    { 
+        $set: { 
+            contacts: { 
+                email: [], 
+                phone: [] 
+            } 
+        } 
+    }
+)
+
+
+// Verify salary range query
+db.employees.find({
+    salary: { $gt: 50000, $lt: 75000 }
+}).pretty()
+
+// Verify developer designation query
+db.employees.find({
+    desig: "developer"
+}).pretty()
+
+// Verify Rahul's document
+db.employees.find({
+    ename: "Rahul"
+}).pretty()
