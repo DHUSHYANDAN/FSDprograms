@@ -1,0 +1,132 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/buttonSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="ADD" />
+
+    <Button
+        android:id="@+id/buttonSubtract"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonSum"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="SUBTRACT" />
+
+    <Button
+        android:id="@+id/buttonReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonSubtract"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="RESET" />
+</RelativeLayout>
+
+package com.example.prg3;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    private EditText editText1, editText2;
+    private Button buttonSum, buttonSubtract, buttonReset;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        editText1 = findViewById(R.id.editText1);
+        editText2 = findViewById(R.id.editText2);
+        buttonSum = findViewById(R.id.buttonSum);
+        buttonSubtract = findViewById(R.id.buttonSubtract);
+        buttonReset = findViewById(R.id.buttonReset);
+
+        addListenerOnButtons();
+    }
+
+    public void addListenerOnButtons() {
+        if (editText1 == null || editText2 == null || buttonSum == null || buttonSubtract == null || buttonReset == null) {
+            // Handle the case where views are not found
+            return;
+        }
+
+        buttonSum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String value1 = editText1.getText().toString();
+                String value2 = editText2.getText().toString();
+
+                try {
+                    int a = Integer.parseInt(value1);
+                    int b = Integer.parseInt(value2);
+                    int sum = a + b;
+                    Toast.makeText(getApplicationContext(), "Sum: " + sum, Toast.LENGTH_SHORT).show();
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "Please enter valid integers", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        buttonSubtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String value1 = editText1.getText().toString();
+                String value2 = editText2.getText().toString();
+
+                try {
+                    int a = Integer.parseInt(value1);
+                    int b = Integer.parseInt(value2);
+                    int difference = a - b;
+                    Toast.makeText(getApplicationContext(), "Difference: " + difference, Toast.LENGTH_SHORT).show();
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "Please enter valid integers", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        buttonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editText1.setText("");
+                editText2.setText("");
+                Toast.makeText(getApplicationContext(), "Inputs reset", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
