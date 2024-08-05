@@ -1,0 +1,97 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Department Element Definition -->
+  <xs:element name="Department">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="deptName" type="xs:string"/>
+        <xs:element name="deptNo" type="xs:string"/>
+        <xs:element name="deptManagerSSN" type="xs:string"/>
+        <xs:element name="deptManagerStartDate" type="xs:date"/>
+        <xs:element name="deptLocation" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Employee Element Definition -->
+  <xs:element name="Employee">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="empName" type="xs:string"/>
+        <xs:element name="empSSN" type="xs:string"/>
+        <xs:element name="empSex" type="xs:string"/>
+        <xs:element name="empSalary" type="xs:decimal"/>
+        <xs:element name="empBirthDate" type="xs:date"/>
+        <xs:element name="empDeptNo" type="xs:string"/>
+        <xs:element name="empSupervisorSSN" type="xs:string"/>
+        <xs:element name="empAddress" type="xs:string"/>
+        <xs:element name="empWorksOn">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Project" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="projectName" type="xs:string"/>
+                    <xs:element name="hoursWorkedPerWeek" type="xs:decimal"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Root Element Definition -->
+  <xs:element name="Company">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Department" type="Department" maxOccurs="unbounded"/>
+        <xs:element name="Employee" type="Employee" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+
+for $dept in /Company/Department
+let $manager := /Company/Employee[empSSN = $dept/deptManagerSSN]
+return <DepartmentInfo>
+  <deptName>{ $dept/deptName/text() }</deptName>
+  <managerName>{ $manager/empName/text() }</managerName>
+  <managerSalary>{ $manager/empSalary/text() }</managerSalary>
+</DepartmentInfo>
+
+
+for $emp in /Company/Employee[empDeptNo = /Company/Department[deptName = 'Research']/deptNo]
+let $supervisor := /Company/Employee[empSSN = $emp/empSupervisorSSN]
+return <EmployeeInfo>
+  <empName>{ $emp/empName/text() }</empName>
+  <supervisorName>{ $supervisor/empName/text() }</supervisorName>
+  <empSalary>{ $emp/empSalary/text() }</empSalary>
+</EmployeeInfo>
+
+for $proj in /Company/Employee/empWorksOn/Project
+let $dept := /Company/Department[deptNo = /Company/Employee[empSSN = /Company/Employee[empWorksOn/Project/projectName = $proj/projectName]/empDeptNo]/deptNo]
+let $empCount := count(/Company/Employee[empWorksOn/Project/projectName = $proj/projectName])
+let $totalHours := sum(/Company/Employee[empWorksOn/Project/projectName = $proj/projectName]/empWorksOn/Project[projectName = $proj/projectName]/hoursWorkedPerWeek)
+return <ProjectInfo>
+  <projectName>{ $proj/projectName/text() }</projectName>
+  <controllingDeptName>{ $dept/deptName/text() }</controllingDeptName>
+  <numberOfEmployees>{ $empCount }</numberOfEmployees>
+  <totalHoursPerWeek>{ $totalHours }</totalHoursPerWeek>
+</ProjectInfo>
+
+
+for $proj in /Company/Employee/empWorksOn/Project
+let $empCount := count(/Company/Employee[empWorksOn/Project/projectName = $proj/projectName])
+where $empCount > 1
+let $dept := /Company/Department[deptNo = /Company/Employee[empSSN = /Company/Employee[empWorksOn/Project/projectName = $proj/projectName]/empDeptNo]/deptNo]
+let $totalHours := sum(/Company/Employee[empWorksOn/Project/projectName = $proj/projectName]/empWorksOn/Project[projectName = $proj/projectName]/hoursWorkedPerWeek)
+return <ProjectInfo>
+  <projectName>{ $proj/projectName/text() }</projectName>
+  <controllingDeptName>{ $dept/deptName/text() }</controllingDeptName>
+  <numberOfEmployees>{ $empCount }</numberOfEmployees>
+  <totalHoursPerWeek>{ $totalHours }</totalHoursPerWeek>
+</ProjectInfo>
+
