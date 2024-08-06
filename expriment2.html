@@ -19,23 +19,21 @@
 <div id="cardsContainer"></div>
 
 <script>
-    fetch('https://api.thedogapi.com/v1/images/search?limit=5')
-    
+    fetch('https://api.thedogapi.com/v1/images/search?')
         .then(response => response.json())
         .then(data => {
             console.log(data);
             const cardsContainer = document.getElementById('cardsContainer');
 
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.classList.add('card');
+            const item = data[0]; // Since we're fetching a single item, we access the first element of the array
+            const card = document.createElement('div');
+            card.classList.add('card');
 
-                card.innerHTML = `
-                <img src="${item.url}" alt="dog">;
-                                `;
+            card.innerHTML = `
+                <img src="${item.url}" alt="dog">
+            `;
 
-                cardsContainer.appendChild(card);
-            });
+            cardsContainer.appendChild(card);
         })
         .catch(error => console.error('Error fetching data:', error));
 </script>
